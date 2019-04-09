@@ -2,6 +2,9 @@
 version: "3.3"
 
 services:
+#  data:
+#    ports:
+#      - "2222:22"
   app_server:
     ports:
       - 8000:8000
@@ -10,5 +13,3 @@ services:
   app_mysql:
     ports:
       - "4406:3306"
-    volumes:
-      - ./dev-ops/docker/_volumes/mysql:/mysql-data

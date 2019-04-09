@@ -8,16 +8,22 @@ services:
     extra_hosts:
       - "docker.vm:127.0.0.1"
     volumes:
-      - .:/app
-      - ~/.composer:/.composer
-      - ~/.npm:/home/application/.npm
-    tmpfs:
-      - /tmp:mode=1777
-
+      - shopware_projectdata:/app
   app_mysql:
     build: dev-ops/docker/containers/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: app
       MYSQL_PASSWORD: app
-      
+
+  data:
+    build: dev-ops/docker/containers/ssh
+    container_name: shopware_data
+    image: data
+    volumes:
+      - shopware_projectdata:/app
+    ports:
+      - "2222:22"
+volumes:
+  shopware_projectdata:
+    external: true
