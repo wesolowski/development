@@ -3,6 +3,7 @@ version: '3.3'
 services:
   app_server:
     build: dev-ops/docker/containers/app
+    container_name: shopware_app
     links:
       - app_mysql:mysql
     extra_hosts:
@@ -11,6 +12,7 @@ services:
       - shopware_projectdata:/app
   app_mysql:
     build: dev-ops/docker/containers/mysql
+    container_name: shopware_mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: app
