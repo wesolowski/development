@@ -10,7 +10,26 @@ The newest installation guide, together with the complete documentation, is avai
 
 Url: <http://localhost:8000/>
 
-Preparation
+##### Docker Data (SSH-Container)
+
+```
+Host: 127.0.0.1
+Port: 2222
+User: root
+Pass: nexus123
+Path: /app
+```
+
+##### Access the application container:
+
+```
+./psh.phar docker:ssh
+# or
+bash bash.sh
+```
+
+
+## Preparation
 
 ```
 git clone git@github.com:wesolowski/development.git
@@ -30,13 +49,7 @@ bash init.sh # Mac / Linux
 init.bat # Windows - PowerShell
 ```
 
-Access the application container:
 
-```
-./psh.phar docker:ssh
-# or
-bash bash.sh
-```
 
 ### Docker installation (PHP is not installed locally)
 
@@ -52,12 +65,3 @@ init.bat # Windows - PowerShell
 
 
 
-### Docker SSH
-
-```
-Host: 127.0.0.1
-Port: 2222
-User: root
-Pass: nexus123
-Path: /app
-```
