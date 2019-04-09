@@ -8,6 +8,8 @@ The newest installation guide, together with the complete documentation, is avai
 
 # NEXUS
 
+Url: <http://localhost:8000/>
+
 Preparation
 
 ```
@@ -19,7 +21,7 @@ git clone git@github.com:shopware/platform.git
 ```
 
 
-### Docker installation
+### Docker installation (PHP is installed locally)
 
 ```
 ./psh.phar docker:start
@@ -34,4 +36,28 @@ Access the application container:
 ./psh.phar docker:ssh
 # or
 bash bash.sh
+```
+
+### Docker installation (PHP is not installed locally)
+
+##### Init
+```
+docker volume create shopware_projectdata
+docker-compose build 
+docker-compose up -d
+
+bash init.sh # Mac / Linux
+init.bat # Windows - PowerShell
+```
+
+
+
+### Docker SSH
+
+```
+Host: 127.0.0.1
+Port: 2222
+User: root
+Pass: nexus123
+Path: /app
 ```
