@@ -16,3 +16,5 @@ docker exec  shopware_app /bin/sh -c "chown application:application /app -Rf"
 
 echo "Install"
 docker exec -u application shopware_app  /bin/sh -c "cd /app; ./psh.phar install"
+
+docker exec -u application shopware_app /bin/sh -c 'ln -s /app/bin/console /usr/local/bin/console'
