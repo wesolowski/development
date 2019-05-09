@@ -1,9 +1,9 @@
 FROM webdevops/php-apache:7.2
 
 COPY wait-for-it.sh /usr/local/bin/
-COPY addExternalUser.sh /addExternalUser
 
 ENV COMPOSER_HOME=/.composer
+ENV NPM_CONFIG_CACHE=/.npm
 ENV WEB_DOCUMENT_ROOT=/app/public
 
 RUN sed -ri -e 's!VirtualHost \*:80!VirtualHost \*:8000!g' /opt/docker/etc/httpd/vhost.conf \
@@ -42,3 +42,4 @@ RUN pecl install -o -f xdebug \
  && mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.inactive
 
 WORKDIR /app
+

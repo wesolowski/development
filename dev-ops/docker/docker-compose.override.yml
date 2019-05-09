@@ -6,6 +6,10 @@ services:
 #    ports:
 #      - "2222:22"
   app_server:
+    environment:
+      CONTAINER_UID: __USER_ID__
+      APPLICATION_UID: __USER_ID__
+      APPLICATION_GID: __GROUP_ID__
     ports:
       - 8000:8000
       - 8080:8080

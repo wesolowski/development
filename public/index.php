@@ -1,6 +1,6 @@
 <?php
 
-use Shopware\Core\StorefrontRequest;
+use PackageVersions\Versions;
 use Shopware\Development\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\Dotenv\Dotenv;
@@ -34,29 +34,22 @@ if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? $_ENV['TRUSTED_HOSTS'] ?? false
 }
 
 
-/*
- * resolve base url, path info
- * add application-id to request in case of twig-storefront request
- *
- */
-
+$request = Request::createFromGlobals();
 $connection = Kernel::getConnection();
 
 if ($env === 'dev') {
     $connection->getConfiguration()->setSQLLogger(new \Doctrine\DBAL\Logging\DebugStack());
 }
 
-$requestBuilder = new \Shopware\Development\RequestTransformer($connection);
-$request = $requestBuilder->transform(
-    Request::createFromGlobals()
-);
-
-$kernel = new Kernel($env, $debug, $classLoader, $connection);
-$response = $kernel->handle($request);
-$canonical = $request->attributes->get(StorefrontRequest::ATTRIBUTE_CANONICAL_LINK);
-if ($canonical) {
-    $response->headers->set('Link', '<'.$canonical.'>; rel="canonical"');
+// resolve SEO urls
+if (class_exists('\Shopware\Storefront\Framework\Routing\RequestTransformer')) {
+    $requestBuilder = new \Shopware\Storefront\Framework\Routing\RequestTransformer($connection);
+    $request = $requestBuilder->transform($request);
 }
 
+$shopwareVersion = Versions::getVersion('shopware/platform');
+
+$kernel = new Kernel($env, $debug, $classLoader, $shopwareVersion, $connection);
+$response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);
